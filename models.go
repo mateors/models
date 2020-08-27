@@ -92,7 +92,7 @@ type Account struct {
 	Status     int    `json:"status"`
 }
 
-//ActivityLog ..
+//ActivityLog ***
 type ActivityLog struct {
 	ID           string `json:"aid"`
 	LogID        int64  `json:"logid"`
@@ -100,9 +100,11 @@ type ActivityLog struct {
 	CompanyID    string `json:"cid"` //foreign key
 	ActivityType string `json:"activity_type"`
 	//owner table info
-	TableName  string `json:"table_name"`
-	PkField    string `json:"pkfield"`
-	PkValue    string `json:"pkvalue"`
+	// TableName string `json:"table_name"`
+	// PkField   string `json:"pkfield"`
+	// PkValue   string `json:"pkvalue"`
+	OwnerTable string `json:"owner_table"` //table_name
+	Parameter  string `json:"parameter"`   //key=val
 	LogDetails string `json:"log_details"`
 	IPAddress  string `json:"ip_address"`
 	LoginID    string `json:"login_id"` //foreign key
@@ -141,4 +143,196 @@ type LoginSession struct {
 	LogoutTime  string `json:"logout_time"`
 	CreateDate  string `json:"create_date"`
 	Status      int    `json:"status"`
+}
+
+//Setting table
+type Setting struct {
+	ID         string `json:"aid"`
+	Type       string `json:"type"`
+	CompanyID  string `json:"cid"` //foreign key
+	FieldName  string `json:"field_name"`
+	FieldValue string `json:"field_value"`
+	Status     int    `json:"status"`
+}
+
+//Message table
+type Message struct {
+	ID          string `json:"aid"`
+	Type        string `json:"type"`
+	CompanyID   string `json:"cid"` //foreign key
+	MessageType string `json:"message_type"`
+	Sender      string `json:"sender"`   //sender login_id
+	Receiver    string `json:"receiver"` //receiver login_id
+	Subject     string `json:"subject"`
+	MessageBody string `json:"message_body"`
+	CreateDate  string `json:"create_date"`
+	Status      int    `json:"status"`
+}
+
+//Verification message
+type Verification struct {
+	ID                  string `json:"aid"`
+	Type                string `json:"type"`
+	CompanyID           string `json:"cid"`                  //foreign key
+	MessageID           string `json:"message_id"`           //foreign key
+	VerificationPurpose string `json:"verification_purpose"` //TFA/VERIFY_EMAIL/VERIFIFY_CELL
+	VerificationCOde    string `json:"verification_code"`
+	CreateDate          string `json:"create_date"`
+	Status              int    `json:"status"`
+}
+
+//VisitorSession info
+type VisitorSession struct {
+	ID             string `json:"aid"`
+	Type           string `json:"type"`
+	CompanyID      string `json:"cid"` //foreign key
+	SessionCode    string `json:"session_code"`
+	Device         string `json:"device"`
+	Platform       string `json:"platform"`
+	ScreenSize     string `json:"screen_size"`
+	BrowserVersion string `json:"browser_version"`
+	OsVersion      string `json:"os_version"`
+	IPAddress      string `json:"ip_address"`
+	GeoLocation    string `json:"geo_location"`
+	City           string `json:"city"`
+	Country        string `json:"country"`
+	VisitorCount   int    `json:"vcount"`
+	CreateDate     string `json:"create_date"`
+	UpdateDate     string `json:"update_date"`
+	Status         int    `json:"status"`
+}
+
+//ProductCategory keeps product group name
+type ProductCategory struct {
+	ID                  string `json:"aid"`
+	Type                string `json:"type"`
+	CompanyID           string `json:"cid"` //foreign key
+	Position            int    `json:"position"`
+	CategoryName        string `json:"category_name"`
+	CategoryDescription string `json:"category_description"`
+	CategoryImage       string `json:"category_image"`
+	Status              int    `json:"status"`
+}
+
+//Product keeps product info
+type Product struct {
+	ID                 string  `json:"aid"`
+	Type               string  `json:"type"`
+	CompanyID          string  `json:"cid"`         //foreign key
+	CategoryID         string  `json:"category_id"` //foreign key
+	Barcode            string  `json:"barcode"`
+	ProductName        string  `json:"product_name"`
+	ProductURL         string  `json:"product_url"`
+	ProductDescription string  `json:"product_description"`
+	ProductImage       string  `json:"product_image"`
+	BuyPrice           float64 `json:"buy_price"`
+	SalePrice          float64 `json:"sale_price"`
+	StockQty           int     `json:"stock_qty"`
+	Status             int     `json:"status"`
+}
+
+//FileStore general table ***
+type FileStore struct {
+	ID           string `json:"aid"`
+	Type         string `json:"type"`
+	CompanyID    string `json:"cid"`
+	ProductID    string `json:"product_id"`  //foreign key
+	OwnerTable   string `json:"owner_table"` //table_name
+	Parameter    string `json:"parameter"`
+	FileType     string `json:"file_type"`
+	FileLocation string `json:"file_location"`
+	Remarks      string `json:"remarks"`
+	Status       int    `json:"status"`
+}
+
+//Warehouse table
+type Warehouse struct {
+	ID               string `json:"aid"`
+	Type             string `json:"type"`
+	CompanyID        string `json:"cid"` //foreign key
+	WarehouseName    string `json:"warehouse_name"`
+	WarehouseDetails string `json:"warehouse_details"`
+	IsDefault        bool   `json:"isdefault"` //true|false == 0|1
+	Status           int    `json:"status"`
+}
+
+//DocKeeper keeps all document info
+type DocKeeper struct {
+	ID             string  `json:"aid"`
+	Type           string  `json:"type"`
+	CompanyID      string  `json:"cid"`                    //foreign key
+	WarehouseID    string  `json:"warehouse_id,omitempty"` //foreign key
+	DocID          int     `json:"doc_id"`
+	DocName        string  `json:"doc_name"`
+	DocType        string  `json:"doc_type"`
+	DocRef         string  `json:"doc_ref"`
+	DocNumber      string  `json:"doc_number"`
+	DocDescription string  `json:"doc_description"`
+	PostingDate    string  `json:"posting_date"`
+	TaxRule        string  `json:"tax_rule"`
+	LoginID        string  `json:"login_id"`   //foreign key
+	AccountID      string  `json:"account_id"` //foreign key
+	TotalPayable   float64 `json:"total_payable"`
+	TotalTax       float64 `json:"total_tax"`
+	TotalDiscount  float64 `json:"total_discount"`
+	PaymentStatus  string  `json:"payment_status"`
+	DocStatus      string  `json:"doc_status"`
+	CreateDate     string  `json:"create_date"`
+	Status         int     `json:"status"`
+}
+
+//TransactionRecord keeps all transaction info
+type TransactionRecord struct {
+	ID             string  `json:"aid"`
+	Type           string  `json:"type"`
+	TrxType        string  `json:"trx_type"`
+	CompanyID      string  `json:"cid"`        //foreign key
+	DocNumber      string  `json:"doc_number"` //foriegn key
+	ProductID      string  `json:"product_id"`
+	StockInfo      string  `json:"stock_info"`
+	ProductSerial  string  `json:"product_serial"` //SKU or barcode
+	Quantity       int     `json:"quantity"`
+	Rate           float64 `json:"rate"`  //per unit price, GAAP Compliance
+	Price          float64 `json:"price"` //price = qty x rate'
+	DiscountRate   float64 `json:"discount_rate"`
+	TaxRate        float64 `json:"tax_rate"`
+	DiscountAmount float64 `json:"discount_amount"` //(price x discount_rate)/100
+	TaxableAmount  float64 `json:"taxable_amount"`  //price-total_discount
+	TaxAmount      float64 `json:"tax_amount"`
+	PayableAmount  float64 `json:"payable_amount"` //taxable_amount + total_tax | price-total_discount+total_tax
+	CreateDate     string  `json:"create_date"`
+	Status         int     `json:"status"` //0=Inactive, 1=Active, 9=Deleted
+}
+
+//StockMovement table
+type StockMovement struct {
+	ID            string `json:"aid"`
+	Type          string `json:"type"`
+	CompanyID     string `json:"cid"`        //foreign key
+	DocNumber     string `json:"doc_number"` //foriegn key
+	StockNote     string `json:"stock_note"`
+	ProductID     string `json:"product_id"`     //foreign key
+	ProductSerial string `json:"product_serial"` //SKU or barcode
+	WarehouseID   string `json:"warehouse_id"`   //foreign key
+	MovementType  string `json:"mtype"`          //movement type = IN/OUT
+	Quantity      int    `json:"quantity"`
+	StockBalance  int    `json:"stock_balance"`
+	Status        int    `json:"status"` //0=Inactive, 1=Active, 9=Deleted
+
+}
+
+//LedgerTransaction table
+type LedgerTransaction struct {
+	ID           string  `json:"aid"`
+	Type         string  `json:"type"`
+	CompanyID    string  `json:"cid"`        //foreign key
+	DocNumber    string  `json:"doc_number"` //foriegn key
+	VoucherName  string  `json:"voucher_name"`
+	LedgerNumber string  `json:"ledger_number"`
+	Description  string  `json:"description"`
+	Debit        float64 `json:"debit"`
+	Credit       float64 `json:"credit"`
+	Balance      float64 `json:"balance"`
+	BalanceType  string  `json:"baltype"` //balance type Dr/Cr/Eq
+	Status       int     `json:"status"`  //0=Inactive, 1=Active, 9=Deleted
 }
