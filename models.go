@@ -40,7 +40,7 @@ type Contact struct {
 	ID        string `json:"aid"`
 	Type      string `json:"type"` //table_name
 	CompanyID string `json:"cid"`  //foreign key
-	ContactID string `json:"contact_id"`
+	ContactID int64  `json:"contact_id"`
 	//mobile,email,pager,phone,website,socialmedia
 	ContactType string `json:"contact_type"`
 	ContactData string `json:"contact_date"`
@@ -57,6 +57,7 @@ type Address struct {
 	ID          string `json:"aid"`
 	Type        string `json:"type"`
 	CompanyID   string `json:"cid"` //foreign key
+	Serial      int64  `json:"serial"`
 	AddressID   string `json:"address_id"`
 	AddressType string `json:"address_type"` //billing,shipping
 	Country     string `json:"country"`
@@ -71,6 +72,7 @@ type Address struct {
 //Account #4 ::cid::account_id
 type Account struct {
 	//ParentId    string    `json:"parent,omitempty"`
+	//ContactInfo []Contact `json:"contact_info,omitempty"`
 	ID          string `json:"aid"`
 	Type        string `json:"type"` //account
 	CompanyID   string `json:"cid"`  //foreign key
@@ -78,18 +80,14 @@ type Account struct {
 	AccountType string `json:"account_type"`
 	AccountName string `json:"account_name"`
 	LoginID     string `json:"login_id"` //foreign key
-
 	FirstName   string `json:"first_name,omitempty"`
 	LastName    string `json:"last_name,omitempty"`
 	DateOfBirth string `json:"dob,omitempty"`
-
-	Mobile string `json:"mobile"` //
-	Email  string `json:"email"`  //
-	//ContactInfo []Contact `json:"contact_info,omitempty"`
-
-	CreateDate string `json:"create_date"`
-	UpdateDate string `json:"update_date,omitempty"`
-	Status     int    `json:"status"`
+	Mobile      string `json:"mobile"` //
+	Email       string `json:"email"`  //
+	CreateDate  string `json:"create_date"`
+	UpdateDate  string `json:"update_date,omitempty"`
+	Status      int    `json:"status"`
 }
 
 //ActivityLog ***
@@ -99,17 +97,13 @@ type ActivityLog struct {
 	Type         string `json:"type"`
 	CompanyID    string `json:"cid"` //foreign key
 	ActivityType string `json:"activity_type"`
-	//owner table info
-	// TableName string `json:"table_name"`
-	// PkField   string `json:"pkfield"`
-	// PkValue   string `json:"pkvalue"`
-	OwnerTable string `json:"owner_table"` //table_name
-	Parameter  string `json:"parameter"`   //key=val
-	LogDetails string `json:"log_details"`
-	IPAddress  string `json:"ip_address"`
-	LoginID    string `json:"login_id"` //foreign key
-	CreateDate string `json:"create_date"`
-	Status     int    `json:"status"`
+	OwnerTable   string `json:"owner_table"` //table_name
+	Parameter    string `json:"parameter"`   //key=val
+	LogDetails   string `json:"log_details"`
+	IPAddress    string `json:"ip_address"`
+	LoginID      string `json:"login_id"` //foreign key
+	CreateDate   string `json:"create_date"`
+	Status       int    `json:"status"`
 }
 
 //DeviceLog tracks user device info (where they login to the system)
@@ -145,7 +139,7 @@ type LoginSession struct {
 	Status      int    `json:"status"`
 }
 
-//Setting table
+//Setting table keep only one file
 type Setting struct {
 	ID         string `json:"aid"`
 	Type       string `json:"type"`
@@ -158,11 +152,12 @@ type Setting struct {
 //Message table
 type Message struct {
 	ID          string `json:"aid"`
+	MessageID   int64  `json:"message_id"`
 	Type        string `json:"type"`
-	CompanyID   string `json:"cid"` //foreign key
-	MessageType string `json:"message_type"`
-	Sender      string `json:"sender"`   //sender login_id
-	Receiver    string `json:"receiver"` //receiver login_id
+	CompanyID   string `json:"cid"`          //foreign key
+	MessageType string `json:"message_type"` //contactus,inapp,email,sms,verify
+	Sender      string `json:"sender"`       //sender login_id or email
+	Receiver    string `json:"receiver"`     //receiver login_id
 	Subject     string `json:"subject"`
 	MessageBody string `json:"message_body"`
 	CreateDate  string `json:"create_date"`
@@ -172,6 +167,7 @@ type Message struct {
 //Verification message
 type Verification struct {
 	ID                  string `json:"aid"`
+	Serial              int64  `json:"serial"`
 	Type                string `json:"type"`
 	CompanyID           string `json:"cid"`                  //foreign key
 	MessageID           string `json:"message_id"`           //foreign key
@@ -207,6 +203,7 @@ type ProductCategory struct {
 	ID                  string `json:"aid"`
 	Type                string `json:"type"`
 	CompanyID           string `json:"cid"` //foreign key
+	CategoryID          int64  `json:"category_id"`
 	Position            int    `json:"position"`
 	CategoryName        string `json:"category_name"`
 	CategoryDescription string `json:"category_description"`
@@ -218,6 +215,7 @@ type ProductCategory struct {
 type Product struct {
 	ID                 string  `json:"aid"`
 	Type               string  `json:"type"`
+	ProductID          int64   `json:"product_id"`
 	CompanyID          string  `json:"cid"`         //foreign key
 	CategoryID         string  `json:"category_id"` //foreign key
 	Barcode            string  `json:"barcode"`
@@ -236,6 +234,7 @@ type FileStore struct {
 	ID           string `json:"aid"`
 	Type         string `json:"type"`
 	CompanyID    string `json:"cid"`
+	FileID       int64  `json:"file_id"`
 	ProductID    string `json:"product_id"`  //foreign key
 	OwnerTable   string `json:"owner_table"` //table_name
 	Parameter    string `json:"parameter"`
@@ -250,6 +249,7 @@ type Warehouse struct {
 	ID               string `json:"aid"`
 	Type             string `json:"type"`
 	CompanyID        string `json:"cid"` //foreign key
+	WarehouseID      int64  `json:"warehouse_id"`
 	WarehouseName    string `json:"warehouse_name"`
 	WarehouseDetails string `json:"warehouse_details"`
 	IsDefault        bool   `json:"isdefault"` //true|false == 0|1
@@ -262,7 +262,7 @@ type DocKeeper struct {
 	Type           string  `json:"type"`
 	CompanyID      string  `json:"cid"`                    //foreign key
 	WarehouseID    string  `json:"warehouse_id,omitempty"` //foreign key
-	DocID          int     `json:"doc_id"`
+	DocID          int64   `json:"doc_id"`                 //doc serial
 	DocName        string  `json:"doc_name"`
 	DocType        string  `json:"doc_type"`
 	DocRef         string  `json:"doc_ref"`
@@ -285,6 +285,7 @@ type DocKeeper struct {
 type TransactionRecord struct {
 	ID             string  `json:"aid"`
 	Type           string  `json:"type"`
+	TrxID          int64   `json:"trx_id"`
 	TrxType        string  `json:"trx_type"`
 	CompanyID      string  `json:"cid"`        //foreign key
 	DocNumber      string  `json:"doc_number"` //foriegn key
@@ -308,7 +309,8 @@ type TransactionRecord struct {
 type StockMovement struct {
 	ID            string `json:"aid"`
 	Type          string `json:"type"`
-	CompanyID     string `json:"cid"`        //foreign key
+	CompanyID     string `json:"cid"` //foreign key
+	Serial        int64  `json:"serial"`
 	DocNumber     string `json:"doc_number"` //foriegn key
 	StockNote     string `json:"stock_note"`
 	ProductID     string `json:"product_id"`     //foreign key
@@ -325,7 +327,8 @@ type StockMovement struct {
 type LedgerTransaction struct {
 	ID           string  `json:"aid"`
 	Type         string  `json:"type"`
-	CompanyID    string  `json:"cid"`        //foreign key
+	CompanyID    string  `json:"cid"` //foreign key
+	Serial       int64   `json:"serial"`
 	DocNumber    string  `json:"doc_number"` //foriegn key
 	VoucherName  string  `json:"voucher_name"`
 	LedgerNumber string  `json:"ledger_number"`
@@ -335,4 +338,48 @@ type LedgerTransaction struct {
 	Balance      float64 `json:"balance"`
 	BalanceType  string  `json:"baltype"` //balance type Dr/Cr/Eq
 	Status       int     `json:"status"`  //0=Inactive, 1=Active, 9=Deleted
+}
+
+//Subscriber ...
+type Subscriber struct {
+	ID             string `json:"aid"`
+	Type           string `json:"type"`
+	CompanyID      string `json:"cid"` //foreign key
+	SubscriberID   int    `json:"subsriber_id"`
+	Mobile         string `json:"mobile"`
+	Email          string `json:"email"`
+	VisitorSession string `json:"visitor_session"`
+	CreateDate     string `json:"create_date"`
+	Status         int    `json:"status"` //0=Inactive, 1=Active, 9=Deleted
+}
+
+//ServiceRequest table
+type ServiceRequest struct {
+	ID              string `json:"aid"`
+	Serial          int64  `json:"serial"`
+	Type            string `json:"type"`
+	CompanyID       string `json:"cid"`         //foreign key
+	ServiceCategory string `json:"category_id"` //foreign key
+	ServiceID       string `json:"product_id"`  //foreign key
+	ServiceName     string `json:"service_name"`
+	CustomerName    string `json:"customer_name"`
+	CustomerPhone   string `json:"customer_phone"`
+	CustomerEmail   string `json:"customer_email"`
+	CustomerAddress string `json:"customer_address"`
+	VehicleMake     string `json:"vehicle_make"`
+	VehicleModel    string `json:"vehicle_model"`
+	VehicleYear     string `json:"vehicle_year"`
+	CreateDate      string `json:"create_date"`
+}
+
+//RequestToBuy table
+type RequestToBuy struct {
+	ID              string `json:"aid"`
+	Serial          int64  `json:"serial"`
+	Type            string `json:"type"`
+	CompanyID       string `json:"cid"` //foreign key
+	RequesterMobile string `json:"mobile"`
+	VehicleInfo     string `json:"vehicle"` //product_id
+	VisitorSession  string `json:"visitor_session"`
+	CreateDate      string `json:"create_date"`
 }
