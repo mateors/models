@@ -218,6 +218,7 @@ type Product struct {
 	ProductID          int64   `json:"product_id"`
 	CompanyID          string  `json:"cid"`         //foreign key
 	CategoryID         string  `json:"category_id"` //foreign key
+	Tags               string  `json:"tags"`        //??
 	Barcode            string  `json:"barcode"`
 	ProductName        string  `json:"product_name"`
 	ProductURL         string  `json:"product_url"`
@@ -382,4 +383,35 @@ type RequestToBuy struct {
 	VehicleInfo     string `json:"vehicle"` //product_id
 	VisitorSession  string `json:"visitor_session"`
 	CreateDate      string `json:"create_date"`
+}
+
+//ProductFeature for every car
+type ProductFeature struct {
+	ID               string `json:"aid"`
+	Serial           int64  `json:"serial"`     //unique serial
+	CompanyID        string `json:"cid"`        //foreign key
+	ProductID        string `json:"product_id"` //foreign key
+	Type             string `json:"type"`
+	RegDate          string `json:"reg_date"`            //
+	MonthInstallment string `json:"monthly_installment"` //
+	Brand            string `json:"brand"`               //
+	Make             string `json:"make"`                //manufacture
+	Model            string `json:"model"`               //
+	ManufactureYear  string `json:"manufacture_year"`    //
+	RegYear          string `json:"reg_year"`            //???//
+	NumberPlat       string `json:"reg_no"`              //??? //
+	VehicleType      string `json:"vehicle_type"`        //
+	Mileage          string `json:"mileage"`             //
+	OwnerInfo        string `json:"owner_info"`          //?? //
+	Color            string `json:"color"`               //
+	Engine           string `json:"engine"`              //
+	FuleType         string `json:"fuel_type"`           //
+	BodyType         string `json:"body_type"`           //category
+	Transmission     string `json:"transmission"`        //
+	SeatCount        string `json:"seat_count"`          //
+	DoorWindow       string `json:"door_window"`         //
+	TyreSize         string `json:"tyre_size"`           //
+	MajoreAccident   string `json:"majore_accident"`     //
+	EngineOverhaul   string `json:"engine_overhaul"`     //
+	PaperStatus      string `json:"paper_status"`        //
 }
