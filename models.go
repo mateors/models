@@ -227,6 +227,7 @@ type Product struct {
 	BuyPrice           float64 `json:"buy_price"`
 	SalePrice          float64 `json:"sale_price"`
 	StockQty           int     `json:"stock_qty"`
+	PublishOnWebStatus string  `json:"publish_status"` //published | unpublished
 	Status             int     `json:"status"`
 }
 
@@ -392,26 +393,48 @@ type ProductFeature struct {
 	CompanyID        string `json:"cid"`        //foreign key
 	ProductID        string `json:"product_id"` //foreign key
 	Type             string `json:"type"`
+	Make             string `json:"make"`                //manufacture
+	BodyType         string `json:"body_type"`           //category
+	Brand            string `json:"brand"`               //
+	FuleType         string `json:"fuel_type"`           //
+	Model            string `json:"model"`               //
+	Transmission     string `json:"transmission"`        //
+	ManufactureYear  string `json:"manufacture_year"`    //
+	SeatCount        string `json:"seat_count"`          //
+	RegYear          string `json:"reg_year"`            //???//
+	DoorWindow       string `json:"door_window"`         //
+	NumberPlat       string `json:"reg_no"`              //??? //
+	TyreSize         string `json:"tyre_size"`           //
+	VehicleType      string `json:"vehicle_type"`        //
+	MajoreAccident   string `json:"majore_accident"`     //
+	Mileage          string `json:"mileage"`             //
+	EngineOverhaul   string `json:"engine_overhaul"`     //
+	Color            string `json:"color"`               //
+	PaperStatus      string `json:"paper_status"`        //
+	Engine           string `json:"engine"`              //
+	OwnerInfo        string `json:"owner_info"`          //?? //
 	RegDate          string `json:"reg_date"`            //
 	MonthInstallment string `json:"monthly_installment"` //
-	Brand            string `json:"brand"`               //
-	Make             string `json:"make"`                //manufacture
-	Model            string `json:"model"`               //
-	ManufactureYear  string `json:"manufacture_year"`    //
-	RegYear          string `json:"reg_year"`            //???//
-	NumberPlat       string `json:"reg_no"`              //??? //
-	VehicleType      string `json:"vehicle_type"`        //
-	Mileage          string `json:"mileage"`             //
-	OwnerInfo        string `json:"owner_info"`          //?? //
-	Color            string `json:"color"`               //
-	Engine           string `json:"engine"`              //
-	FuleType         string `json:"fuel_type"`           //
-	BodyType         string `json:"body_type"`           //category
-	Transmission     string `json:"transmission"`        //
-	SeatCount        string `json:"seat_count"`          //
-	DoorWindow       string `json:"door_window"`         //
-	TyreSize         string `json:"tyre_size"`           //
-	MajoreAccident   string `json:"majore_accident"`     //
-	EngineOverhaul   string `json:"engine_overhaul"`     //
-	PaperStatus      string `json:"paper_status"`        //
+
+}
+
+//InspectionReport ...
+type InspectionReport struct {
+	ID                 string `json:"aid"`
+	Serial             int64  `json:"serial"`              //unique serial
+	CompanyID          string `json:"cid"`                 //foreign key
+	ProductID          string `json:"product_id"`          //foreign key
+	Type               string `json:"type"`                //tableName
+	Description        string `json:"description"`         //Short description
+	AirCondition       string `json:"aircondition"`        //PASS|FAIL|RECTIFIED
+	Suspension         string `json:"suspension"`          //PASS|FAIL|RECTIFIED
+	EngineTransmission string `json:"engine_transmission"` //PASS|FAIL|RECTIFIED
+	BatteryLights      string `json:"battery_lights"`      //PASS|FAIL|RECTIFIED
+	Imperfections      string `json:"imperfections"`       //PASS|FAIL|RECTIFIED
+	NoMajoreAccidents  string `json:"nomajore_accidents"`  //PASS|FAIL|RECTIFIED
+	ExteriorBody       string `json:"exterior_body"`       //PASS|FAIL|RECTIFIED
+	TyresBrakes        string `json:"tyres_brakes"`        //PASS|FAIL|RECTIFIED
+	Interior           string `json:"interior"`            //PASS|FAIL|RECTIFIED
+	OnboardDiagnostics string `json:"onboard_diagnostics"` //PASS|FAIL|RECTIFIED
+	ReportFile         string `json:"report_file"`         //pdf file location
 }
