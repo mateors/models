@@ -438,3 +438,28 @@ type InspectionReport struct {
 	OnboardDiagnostics string `json:"onboard_diagnostics"` //PASS|FAIL|RECTIFIED
 	ReportFile         string `json:"report_file"`         //pdf file location
 }
+
+//Brand ...
+type Brand struct {
+	ID         string `json:"aid"`
+	BrandID    int64  `json:"brand_id"` //unique serial
+	CompanyID  string `json:"cid"`      //foreign
+	Type       string `json:"type"`     //tableName
+	BrandName  string `json:"brand_name"`
+	Remarks    string `json:"remarks"`
+	CreateDate string `json:"create_date"`
+	Status     int    `json:"status"`
+}
+
+//Model ...
+type Model struct {
+	ID               string `json:"aid"`
+	ModelID          int64  `json:"model_id"` //unique serial
+	CompanyID        string `json:"cid"`      //foreign
+	Type             string `json:"type"`     //tableName
+	BrandID          string `json:"brand_id"` //foreign key
+	ModelName        string `json:"model_name"`
+	ModelDescription string `json:"model_description"`
+	CreateDate       string `json:"create_date"`
+	Status           int    `json:"status"`
+}
