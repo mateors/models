@@ -208,6 +208,7 @@ type ProductCategory struct {
 	CategoryName        string `json:"category_name"`
 	CategoryDescription string `json:"category_description"`
 	CategoryImage       string `json:"category_image"`
+	CategoryFor         string `json:"category_for"` //product | service
 	Status              int    `json:"status"`
 }
 
