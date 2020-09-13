@@ -217,9 +217,10 @@ type Product struct {
 	ID                 string  `json:"aid"`
 	Type               string  `json:"type"`
 	ProductID          int64   `json:"product_id"`
-	CompanyID          string  `json:"cid"`         //foreign key
-	CategoryID         string  `json:"category_id"` //foreign key
-	Tags               string  `json:"tags"`        //??
+	CompanyID          string  `json:"cid"`          //foreign key
+	CategoryID         string  `json:"category_id"`  //foreign key
+	ProductType        string  `json:"product_type"` //raw_material,stockable,consumable,service
+	Tags               string  `json:"tags"`         //??
 	Barcode            string  `json:"barcode"`
 	ProductName        string  `json:"product_name"`
 	ProductURL         string  `json:"product_url"`
@@ -229,6 +230,7 @@ type Product struct {
 	SalePrice          float64 `json:"sale_price"`
 	StockQty           int     `json:"stock_qty"`
 	PublishOnWebStatus string  `json:"publish_status"` //published | unpublished
+	Availability       string  `json:"availability"`   //coming soon | available
 	Status             int     `json:"status"`
 }
 
