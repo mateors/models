@@ -429,6 +429,7 @@ type InspectionReport struct {
 	ProductID          string `json:"product_id"`          //foreign key
 	Type               string `json:"type"`                //tableName
 	Description        string `json:"description"`         //Short description
+	CertificationNote  string `json:"cert_note"`           //cert note
 	AirCondition       string `json:"aircondition"`        //PASS|FAIL|RECTIFIED
 	Suspension         string `json:"suspension"`          //PASS|FAIL|RECTIFIED
 	EngineTransmission string `json:"engine_transmission"` //PASS|FAIL|RECTIFIED
@@ -439,7 +440,7 @@ type InspectionReport struct {
 	TyresBrakes        string `json:"tyres_brakes"`        //PASS|FAIL|RECTIFIED
 	Interior           string `json:"interior"`            //PASS|FAIL|RECTIFIED
 	OnboardDiagnostics string `json:"onboard_diagnostics"` //PASS|FAIL|RECTIFIED
-	ReportFile         string `json:"report_file"`         //pdf file location
+	ReportFile         string `json:"report_file"`         //InspectionReport pdf file location
 }
 
 //Brand ...
@@ -465,4 +466,28 @@ type Model struct {
 	ModelDescription string `json:"model_description"`
 	CreateDate       string `json:"create_date"`
 	Status           int    `json:"status"`
+}
+
+//SellInfo ...
+type SellInfo struct {
+	ID         string `json:"aid"`
+	Name       string `json:"name"`
+	Phone      string `json:"phone"`
+	Email      string `json:"email"`
+	Address    string `json:"address"`
+	Brand      string `json:"brand_name"`
+	Model      string `json:"model_name"`
+	MfgYear    string `json:"mfg_year"`
+	RegYear    string `json:"reg_year"`
+	Division   string `json:"division"`
+	Number     string `json:"number"`
+	RegFile    string `json:"regfile"`
+	TaxFile    string `json:"taxfile"`
+	Photo1     string `json:"photo1"`
+	Photo2     string `json:"photo2"`
+	Photo3     string `json:"photo3"`
+	Photo4     string `json:"photo4"`
+	CompanyID  string `json:"cid"` //foreign key
+	CreateDate string `json:"create_date"`
+	Type       string `json:"type"` //tableName sell_info
 }
