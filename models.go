@@ -209,6 +209,7 @@ type ProductCategory struct {
 	CategoryName        string `json:"category_name"`
 	CategoryDescription string `json:"category_description"`
 	CategoryImage       string `json:"category_image"`
+	CategoryFor         string `json:"category_for"` //product | service
 	Status              int    `json:"status"`
 }
 
@@ -217,8 +218,10 @@ type Product struct {
 	ID                 string  `json:"aid"`
 	Type               string  `json:"type"`
 	ProductID          int64   `json:"product_id"`
-	CompanyID          string  `json:"cid"`         //foreign key
-	CategoryID         string  `json:"category_id"` //foreign key
+	CompanyID          string  `json:"cid"`          //foreign key
+	CategoryID         string  `json:"category_id"`  //foreign key
+	ProductType        string  `json:"product_type"` //raw_material,stockable,consumable,service
+	Tags               string  `json:"tags"`         //??
 	Barcode            string  `json:"barcode"`
 	ProductName        string  `json:"product_name"`
 	ProductURL         string  `json:"product_url"`
@@ -227,6 +230,8 @@ type Product struct {
 	BuyPrice           float64 `json:"buy_price"`
 	SalePrice          float64 `json:"sale_price"`
 	StockQty           int     `json:"stock_qty"`
+	PublishOnWebStatus string  `json:"publish_status"` //published | unpublished
+	Availability       string  `json:"availability"`   //coming soon | available
 	Status             int     `json:"status"`
 }
 
@@ -383,4 +388,107 @@ type RequestToBuy struct {
 	VehicleInfo     string `json:"vehicle"` //product_id
 	VisitorSession  string `json:"visitor_session"`
 	CreateDate      string `json:"create_date"`
+}
+
+//ProductFeature for every car
+type ProductFeature struct {
+	ID               string `json:"aid"`
+	Serial           int64  `json:"serial"`     //unique serial
+	CompanyID        string `json:"cid"`        //foreign key
+	ProductID        string `json:"product_id"` //foreign key
+	Type             string `json:"type"`
+	Make             string `json:"make"`                //manufacture
+	BodyType         string `json:"body_type"`           //category
+	Brand            string `json:"brand"`               //
+	FuleType         string `json:"fuel_type"`           //
+	Model            string `json:"model"`               //
+	Transmission     string `json:"transmission"`        //
+	ManufactureYear  string `json:"manufacture_year"`    //
+	SeatCount        string `json:"seat_count"`          //
+	RegYear          string `json:"reg_year"`            //???//
+	DoorWindow       string `json:"door_window"`         //
+	NumberPlat       string `json:"reg_no"`              //??? //
+	TyreSize         string `json:"tyre_size"`           //
+	VehicleType      string `json:"vehicle_type"`        //
+	MajoreAccident   string `json:"majore_accident"`     //
+	Mileage          string `json:"mileage"`             //
+	EngineOverhaul   string `json:"engine_overhaul"`     //
+	Color            string `json:"color"`               //
+	PaperStatus      string `json:"paper_status"`        //
+	Engine           string `json:"engine"`              //
+	OwnerInfo        string `json:"owner_info"`          //?? //
+	RegDate          string `json:"reg_date"`            //
+	MonthInstallment string `json:"monthly_installment"` //
+
+}
+
+//InspectionReport ...
+type InspectionReport struct {
+	ID                 string `json:"aid"`
+	Serial             int64  `json:"serial"`              //unique serial
+	CompanyID          string `json:"cid"`                 //foreign key
+	ProductID          string `json:"product_id"`          //foreign key
+	Type               string `json:"type"`                //tableName
+	Description        string `json:"description"`         //Short description
+	CertificationNote  string `json:"cert_note"`           //cert note
+	AirCondition       string `json:"aircondition"`        //PASS|FAIL|RECTIFIED
+	Suspension         string `json:"suspension"`          //PASS|FAIL|RECTIFIED
+	EngineTransmission string `json:"engine_transmission"` //PASS|FAIL|RECTIFIED
+	BatteryLights      string `json:"battery_lights"`      //PASS|FAIL|RECTIFIED
+	Imperfections      string `json:"imperfections"`       //PASS|FAIL|RECTIFIED
+	NoMajoreAccidents  string `json:"nomajore_accidents"`  //PASS|FAIL|RECTIFIED
+	ExteriorBody       string `json:"exterior_body"`       //PASS|FAIL|RECTIFIED
+	TyresBrakes        string `json:"tyres_brakes"`        //PASS|FAIL|RECTIFIED
+	Interior           string `json:"interior"`            //PASS|FAIL|RECTIFIED
+	OnboardDiagnostics string `json:"onboard_diagnostics"` //PASS|FAIL|RECTIFIED
+	ReportFile         string `json:"report_file"`         //InspectionReport pdf file location
+}
+
+//Brand ...
+type Brand struct {
+	ID         string `json:"aid"`
+	BrandID    int64  `json:"brand_id"` //unique serial
+	CompanyID  string `json:"cid"`      //foreign
+	Type       string `json:"type"`     //tableName
+	BrandName  string `json:"brand_name"`
+	Remarks    string `json:"remarks"`
+	CreateDate string `json:"create_date"`
+	Status     int    `json:"status"`
+}
+
+//Model ...
+type Model struct {
+	ID               string `json:"aid"`
+	ModelID          int64  `json:"model_id"` //unique serial
+	CompanyID        string `json:"cid"`      //foreign
+	Type             string `json:"type"`     //tableName
+	BrandID          string `json:"brand_id"` //foreign key
+	ModelName        string `json:"model_name"`
+	ModelDescription string `json:"model_description"`
+	CreateDate       string `json:"create_date"`
+	Status           int    `json:"status"`
+}
+
+//SellInfo ...
+type SellInfo struct {
+	ID         string `json:"aid"`
+	Name       string `json:"name"`
+	Phone      string `json:"phone"`
+	Email      string `json:"email"`
+	Address    string `json:"address"`
+	Brand      string `json:"brand_name"`
+	Model      string `json:"model_name"`
+	MfgYear    string `json:"mfg_year"`
+	RegYear    string `json:"reg_year"`
+	Division   string `json:"division"`
+	Number     string `json:"number"`
+	RegFile    string `json:"regfile"`
+	TaxFile    string `json:"taxfile"`
+	Photo1     string `json:"photo1"`
+	Photo2     string `json:"photo2"`
+	Photo3     string `json:"photo3"`
+	Photo4     string `json:"photo4"`
+	CompanyID  string `json:"cid"` //foreign key
+	CreateDate string `json:"create_date"`
+	Type       string `json:"type"` //tableName sell_info
 }
