@@ -83,6 +83,7 @@ type Account struct {
 	FirstName   string `json:"first_name,omitempty"`
 	LastName    string `json:"last_name,omitempty"`
 	DateOfBirth string `json:"dob,omitempty"`
+	Gender      string `json:"gender"` //female,male,other
 	Mobile      string `json:"mobile"` //
 	Email       string `json:"email"`  //
 	CreateDate  string `json:"create_date"`
